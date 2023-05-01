@@ -14,7 +14,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <junit.version>4.13.2</junit.version>
-        <selenium.version>4.6.0</selenium.version>
+        <selenium.version>4.8.1</selenium.version>
         <webdrivermanager.version>5.3.1</webdrivermanager.version>
         <allure.version>2.15.0</allure.version>
         <aspectj.version>1.9.7</aspectj.version>
@@ -32,25 +32,25 @@
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
-            <version>${selenium.version}</version>
+            <version>4.9.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-chrome-driver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-chrome-driver</artifactId>
-            <version>${selenium.version}</version>
+            <version>4.9.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-firefox-driver -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-firefox-driver</artifactId>
-            <version>${selenium.version}</version>
+            <version>4.9.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-support -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-support</artifactId>
-            <version>${selenium.version}</version>
+            <version>4.9.0</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/io.github.bonigarcia/webdrivermanager -->
         <dependency>
@@ -103,7 +103,7 @@
                     </dependency>
                 </dependencies>
             </plugin>
-
+            <!-- подключение плагина allure-maven для вызова функций Allure с помощью Maven -->
             <plugin>
                 <groupId>io.qameta.allure</groupId>
                 <artifactId>allure-maven</artifactId>
