@@ -40,4 +40,5 @@ public class LoginPage {
         driver.findElement(fieldPassword).sendKeys(password);
         return this;
     }
+
 }

@@ -1,11 +1,29 @@
+import api.User;
+import api.UserClient;
+import api.UserCredentials;
 import base.ExtendsTest;
 import io.qameta.allure.Description;
 import io.qameta.allure.junit4.DisplayName;
+import io.restassured.response.Response;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 
 @DisplayName("Тесты страницы логина")
 public class LoginPageTest extends ExtendsTest {
+    protected static final User user = ExtendsTest.getRandomUser();
+
+    UserClient userClient;
+
+    @Before
+    @DisplayName("Авторизуюсь под учетной записью")
+
+    public void setupAccount() {
+        userClient = new UserClient();
+        userClient.createUser(user);
+
+    }
 
     @Test
     @DisplayName("Авторизуюсь через кнопку Войти в аккаунт")
@@ -13,8 +31,8 @@ public class LoginPageTest extends ExtendsTest {
     public void loginWithMainPagePositiveTest() {
         mainPage.open();
         mainPage.pressButtonLogin()
-                .enterEmail(VALID_EMAIL)
-                .enterPassword(VALID_PASSWORD)
+                .enterEmail(user.getEmail())
+                .enterPassword(user.getPassword())
                 .pressButtonLogin()
                 .checkEnabledButtonMakeOrder();
     }
@@ -25,8 +43,8 @@ public class LoginPageTest extends ExtendsTest {
     public void loginWithMainPageButtonPersonAccountPositiveTest() {
         mainPage.open();
         mainPage.pressButtonPersonalAccount()
-                .enterEmail(VALID_EMAIL)
-                .enterPassword(VALID_PASSWORD)
+                .enterEmail(user.getEmail())
+                .enterPassword(user.getPassword())
                 .pressButtonLogin()
                 .checkEnabledButtonMakeOrder();
     }
@@ -37,8 +55,8 @@ public class LoginPageTest extends ExtendsTest {
     public void loginWitRegistrationPagePositiveTest() {
         registrationPage.open();
         registrationPage.pressButtonLogin()
-                .enterEmail(VALID_EMAIL)
-                .enterPassword(VALID_PASSWORD)
+                .enterEmail(user.getEmail())
+                .enterPassword(user.getPassword())
                 .pressButtonLogin()
                 .checkEnabledButtonMakeOrder();
     }
@@ -49,9 +67,25 @@ public class LoginPageTest extends ExtendsTest {
     public void loginWithForgotPagePositiveTest() {
         forgotPasswordPage.open();
         forgotPasswordPage.pressButtonLogin()
-                .enterEmail(VALID_EMAIL)
-                .enterPassword(VALID_PASSWORD)
+                .enterEmail(user.getEmail())
+                .enterPassword(user.getPassword())
                 .pressButtonLogin()
                 .checkEnabledButtonMakeOrder();
+    }
+
+    @After
+    public void tearDown() {
+        userClient = new UserClient();
+        UserCredentials userCredentials = new UserCredentials(user.getEmail(), user.getPassword());
+        Response response = userClient.login(userCredentials);
+        if (response.body().jsonPath().getString("accessToken") != null) {
+            userClient.delete(response);
+        }
+
+        UserCredentials userNoValidCredentials = new UserCredentials(user.getEmail(), user.getPassword());
+        Response noValidResponse = userClient.login(userNoValidCredentials);
+        if (noValidResponse.body().jsonPath().getString("accessToken") != null) {
+            userClient.delete(noValidResponse);
+        }
     }
 }
