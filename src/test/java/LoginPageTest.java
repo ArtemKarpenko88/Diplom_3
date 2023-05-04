@@ -17,7 +17,7 @@ public class LoginPageTest extends ExtendsTest {
     UserClient userClient;
 
     @Before
-    @DisplayName("Авторизуюсь под учетной записью")
+    @DisplayName("Создание тестового клиента")
 
     public void setupAccount() {
         userClient = new UserClient();
@@ -82,10 +82,5 @@ public class LoginPageTest extends ExtendsTest {
             userClient.delete(response);
         }
 
-        UserCredentials userNoValidCredentials = new UserCredentials(user.getEmail(), user.getPassword());
-        Response noValidResponse = userClient.login(userNoValidCredentials);
-        if (noValidResponse.body().jsonPath().getString("accessToken") != null) {
-            userClient.delete(noValidResponse);
-        }
     }
 }

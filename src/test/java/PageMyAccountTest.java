@@ -71,11 +71,6 @@ public class PageMyAccountTest extends ExtendsTest {
             userClient.delete(response);
         }
 
-        UserCredentials userNoValidCredentials = new UserCredentials(user.getEmail(), user.getPassword());
-        Response noValidResponse = userClient.login(userNoValidCredentials);
-        if (noValidResponse.body().jsonPath().getString("accessToken") != null) {
-            userClient.delete(noValidResponse);
-        }
     }
 
 }
